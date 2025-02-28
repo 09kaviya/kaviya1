@@ -1,0 +1,242 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "id": "64d747e2-c74c-4465-a35a-0681fd020ebc",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "original dataframe with NaN\n",
+      "         one       two     three\n",
+      "a  0.499054 -0.058142  1.040322\n",
+      "b -0.660663 -0.566502 -0.572546\n",
+      "c       NaN       NaN       NaN\n",
+      "d -0.903884 -0.529105  0.287909\n",
+      "e       NaN       NaN       NaN\n",
+      "f -0.754326 -0.586493  1.431934\n",
+      "/n\n",
+      "Dropped Dataframe\n",
+      "         one       two     three\n",
+      "a  0.499054 -0.058142  1.040322\n",
+      "b -0.660663 -0.566502 -0.572546\n",
+      "d -0.903884 -0.529105  0.287909\n",
+      "f -0.754326 -0.586493  1.431934\n",
+      "\n",
+      "\n"
+     ]
+    }
+   ],
+   "source": [
+    "import pandas as pd\n",
+    "import numpy as np\n",
+    "df=pd.DataFrame(np.random.randn(4,3),index=['a','b','d','f'],columns=['one','two','three'])\n",
+    "df=df.reindex(['a','b','c','d','e','f'])\n",
+    "print('original dataframe with NaN\\n',df)\n",
+    "print(\"/n\")\n",
+    "print(\"Dropped Dataframe\\n\",df.dropna())\n",
+    "print(\"\\n\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "id": "444c52a7-69bf-41f4-87b5-3fc373999caa",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "original dataframe with NaN\n",
+      "         one      two     three\n",
+      "a  0.242352 -0.37388  2.113125\n",
+      "b -1.453266  0.63612 -0.780895\n",
+      "c       NaN      NaN       NaN\n",
+      "/n\n",
+      "Nan replace with'1':\n",
+      "         one      two     three\n",
+      "a  0.242352 -0.37388  2.113125\n",
+      "b -1.453266  0.63612 -0.780895\n",
+      "c  1.000000  1.00000  1.000000\n",
+      "\n",
+      "\n"
+     ]
+    }
+   ],
+   "source": [
+    "import pandas as pd\n",
+    "import numpy as np\n",
+    "df=pd.DataFrame(np.random.randn(4,3),index=['a','b','d','f'],columns=['one','two','three'])\n",
+    "df=df.reindex(['a','b','c'])\n",
+    "print('original dataframe with NaN\\n',df)\n",
+    "print(\"/n\")\n",
+    "print(\"Nan replace with'1':\\n\",df.fillna(1))\n",
+    "print(\"\\n\")\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "id": "a95c75c9-82a7-40ab-a27d-7db3d6561060",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "original dataframe with NaN\n",
+      "         one       two     three\n",
+      "a -1.616734 -0.408215 -1.296872\n",
+      "b -1.933089  1.723443 -0.054534\n",
+      "c       NaN       NaN       NaN\n",
+      "/n\n",
+      "Nan with true fill:\n",
+      "\n",
+      "a    False\n",
+      "b    False\n",
+      "c     True\n",
+      "Name: one, dtype: bool\n"
+     ]
+    }
+   ],
+   "source": [
+    "import pandas as pd\n",
+    "import numpy as np\n",
+    "df=pd.DataFrame(np.random.randn(4,3),index=['a','b','d','f'],columns=['one','two','three'])\n",
+    "df=df.reindex(['a','b','c'])\n",
+    "print('original dataframe with NaN\\n',df)\n",
+    "print(\"/n\")\n",
+    "print(\"Nan with true fill:\\n\")\n",
+    "print(df['one'].isnull())"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "id": "9897e94c-c783-42dc-b595-3610ea0e6751",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "original dataframe with NaN\n",
+      "         one       two     three\n",
+      "a -0.575760 -0.027376  1.453878\n",
+      "b -0.667950  0.090484 -0.100116\n",
+      "c       NaN       NaN       NaN\n",
+      "d  0.360484  0.366199 -0.781039\n",
+      "e       NaN       NaN       NaN\n",
+      "f -0.592414  1.262537  1.016189\n",
+      "\n",
+      "\n",
+      "NaN with true fill:\n",
+      "\n",
+      "a    False\n",
+      "b    False\n",
+      "c     True\n",
+      "d    False\n",
+      "e     True\n",
+      "f    False\n",
+      "Name: one, dtype: bool\n",
+      "\n",
+      "\n",
+      "\n",
+      "NaN fill with background values:\n",
+      "\n",
+      "        one       two     three\n",
+      "a -0.575760 -0.027376  1.453878\n",
+      "b -0.667950  0.090484 -0.100116\n",
+      "c  0.360484  0.366199 -0.781039\n",
+      "d  0.360484  0.366199 -0.781039\n",
+      "e -0.592414  1.262537  1.016189\n",
+      "f -0.592414  1.262537  1.016189\n",
+      "\n",
+      "NaN filled with forword fill:\n",
+      "\n",
+      "        one       two     three\n",
+      "a -0.575760 -0.027376  1.453878\n",
+      "b -0.667950  0.090484 -0.100116\n",
+      "c -0.667950  0.090484 -0.100116\n",
+      "d  0.360484  0.366199 -0.781039\n",
+      "e  0.360484  0.366199 -0.781039\n",
+      "f -0.592414  1.262537  1.016189\n"
+     ]
+    }
+   ],
+   "source": [
+    "import pandas as pd\n",
+    "import numpy as np\n",
+    "df=pd.DataFrame(np.random.randn(4,3),index=['a','b','d','f'],columns=['one','two','three'])\n",
+    "df=df.reindex(['a','b','c','d','e','f'])\n",
+    "print('original dataframe with NaN\\n',df)\n",
+    "print('\\n')\n",
+    "print(\"NaN with true fill:\\n\")\n",
+    "print(df['one'].isnull())\n",
+    "print(\"\\n\")\n",
+    "print(\"\\nNaN fill with background values:\\n\")\n",
+    "print(df.bfill())\n",
+    "print(\"\\nNaN filled with forword fill:\\n\")\n",
+    "print(df.ffill())"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 25,
+   "id": "6834a3b3-dd4d-444c-8636-14974a066311",
+   "metadata": {},
+   "outputs": [
+    {
+     "ename": "AttributeError",
+     "evalue": "module 'pandas' has no attribute 'Dataframe'",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mAttributeError\u001b[0m                            Traceback (most recent call last)",
+      "Cell \u001b[0;32mIn[25], line 1\u001b[0m\n\u001b[0;32m----> 1\u001b[0m df\u001b[38;5;241m=\u001b[39mpd\u001b[38;5;241m.\u001b[39mDataframe({\u001b[38;5;124m'\u001b[39m\u001b[38;5;124mone\u001b[39m\u001b[38;5;124m'\u001b[39m:[\u001b[38;5;241m10\u001b[39m,\u001b[38;5;241m20\u001b[39m,\u001b[38;5;241m80\u001b[39m,\u001b[38;5;241m40\u001b[39m,\u001b[38;5;241m50\u001b[39m],\u001b[38;5;124m'\u001b[39m\u001b[38;5;124mtwo\u001b[39m\u001b[38;5;124m'\u001b[39m:[\u001b[38;5;241m60\u001b[39m,\u001b[38;5;241m70\u001b[39m,\u001b[38;5;241m80\u001b[39m,\u001b[38;5;241m0\u001b[39m,\u001b[38;5;241m10\u001b[39m]})\n\u001b[1;32m      2\u001b[0m \u001b[38;5;28mprint\u001b[39m(\u001b[38;5;124m\"\u001b[39m\u001b[38;5;124moriginal DataFrame:\u001b[39m\u001b[38;5;130;01m\\n\u001b[39;00m\u001b[38;5;124m\"\u001b[39m,df)\n\u001b[1;32m      3\u001b[0m \u001b[38;5;28mprint\u001b[39m(\u001b[38;5;124m\"\u001b[39m\u001b[38;5;130;01m\\n\u001b[39;00m\u001b[38;5;124m dataframe with replace values:\u001b[39m\u001b[38;5;130;01m\\n\u001b[39;00m\u001b[38;5;124m\"\u001b[39m)\n",
+      "\u001b[0;31mAttributeError\u001b[0m: module 'pandas' has no attribute 'Dataframe'"
+     ]
+    }
+   ],
+   "source": [
+    "df=pd.Dataframe({'one':[10,20,80,40,50],'two':[60,70,80,0,10]})\n",
+    "print(\"original DataFrame:\\n\",df)\n",
+    "print(\"\\n dataframe with replace values:\\n\")\n",
+    "print(df.replace({10:5,80:30}))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "ae3eda41-4967-478c-a484-4f7ccde2c86e",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.12.7"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
